@@ -14,6 +14,12 @@ WHERE id = $1 AND deleted_at IS NULL;
 -- name: GetUserByName :one
 SELECT * FROM anclax.users WHERE name = $1 AND deleted_at IS NULL;
 
+-- name: ListUsers :many
+SELECT id, name, created_at, updated_at, deleted_at
+FROM anclax.users
+WHERE deleted_at IS NULL
+ORDER BY id;
+
 -- name: IsUsernameExists :one
 SELECT EXISTS (SELECT 1 FROM anclax.users WHERE name = $1);
 

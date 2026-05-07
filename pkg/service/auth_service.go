@@ -3,12 +3,13 @@ package service
 import (
 	"context"
 	"fmt"
+	"time"
 
-	"github.com/cloudcarver/anclax/core"
-	"github.com/cloudcarver/anclax/pkg/utils"
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
-	"github.com/cloudcarver/anclax/pkg/zgen/querier"
+	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
 )
@@ -94,6 +95,20 @@ type UserMeta struct {
 	UserID int32
 }
 
+// UserListItem is the public projection returned by ListUsers — public
+// metadata only, password hash + salt deliberately omitted so callers
+// (admin UIs) cannot accidentally surface them.
+type UserListItem struct {
+	UserID    int32
+	Name      string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	// DeletedAt is always nil in the default ListUsers result (which
+	// filters out soft-deleted rows). It exists on the type for forward
+	// compatibility with a future include-deleted listing variant.
+	DeletedAt *time.Time
+}
+
 func (s *Service) CreateNewUser(ctx context.Context, username, password string) (*UserMeta, error) {
 	var ret *UserMeta
 	if err := s.m.RunTransactionWithTx(ctx, func(tx core.Tx, txm model.ModelInterface) error {
@@ -165,6 +180,27 @@ func (s *Service) CreateNewUserWithTx(ctx context.Context, tx core.Tx, username,
 
 func (s *Service) DeleteUserByName(ctx context.Context, username string) error {
 	return s.m.DeleteUserByName(ctx, username)
+}
+
+// ListUsers returns the non-deleted users in id-ascending order. The
+// projection deliberately omits password_hash / password_salt — callers
+// (admin UIs) cannot accidentally surface them.
+func (s *Service) ListUsers(ctx context.Context) ([]UserListItem, error) {
+	rows, err := s.m.ListUsers(ctx)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to list users")
+	}
+	out := make([]UserListItem, 0, len(rows))
+	for _, r := range rows {
+		out = append(out, UserListItem{
+			UserID:    r.ID,
+			Name:      r.Name,
+			CreatedAt: r.CreatedAt,
+			UpdatedAt: r.UpdatedAt,
+			DeletedAt: r.DeletedAt,
+		})
+	}
+	return out, nil
 }
 
 func (s *Service) RestoreUserByName(ctx context.Context, username string) error {
