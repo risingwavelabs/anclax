@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/hooks"
-	"github.com/cloudcarver/anclax/pkg/macaroons"
-	"github.com/cloudcarver/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/hooks"
+	"github.com/risingwavelabs/anclax/pkg/macaroons"
+	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pkg/errors"
 )

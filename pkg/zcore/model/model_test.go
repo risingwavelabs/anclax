@@ -4,7 +4,7 @@ import (
 	context "context"
 	"testing"
 
-	"github.com/cloudcarver/anclax/core"
+	"github.com/risingwavelabs/anclax/core"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 )

@@ -1,8 +1,8 @@
 package types
 
 import (
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
-	"github.com/cloudcarver/anclax/pkg/zgen/querier"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
 )
 
 func TaskToAPI(task *querier.AnclaxTask) apigen.Task {

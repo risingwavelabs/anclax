@@ -6,12 +6,12 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/cloudcarver/anclax/core"
-	"github.com/cloudcarver/anclax/pkg/app/closer"
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/logger"
-	"github.com/cloudcarver/anclax/pkg/utils"
-	"github.com/cloudcarver/anclax/pkg/zgen/querier"
+	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/app/closer"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/logger"
+	"github.com/risingwavelabs/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/pgx/v5"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
@@ -19,7 +19,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pkg/errors"
 
-	"github.com/cloudcarver/anclax"
+	"github.com/risingwavelabs/anclax"
 )
 
 var log = logger.NewLogAgent("model")

@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	macaroons "github.com/cloudcarver/anclax/pkg/macaroons"
 	fiber "github.com/gofiber/fiber/v2"
+	macaroons "github.com/risingwavelabs/anclax/pkg/macaroons"
 	gomock "go.uber.org/mock/gomock"
 )
 

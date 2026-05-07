@@ -13,7 +13,7 @@ Anclax 是面向小到中型应用（单个 PostgreSQL）。以模式定义 API 
 1. 安装 Anclax CLI：
 
   ```bash
-  go install github.com/cloudcarver/anclax/cmd/anclax@latest
+  go install github.com/risingwavelabs/anclax/cmd/anclax@latest
   ```
 
 2. 初始化项目（安装工具链并生成代码）：
@@ -35,7 +35,7 @@ Anclax 是面向小到中型应用（单个 PostgreSQL）。以模式定义 API 
 4. 可选：为编码助手添加 Anclax skill：
 
   ```bash
-  npx skills add cloudcarver/anclax
+  npx skills add risingwavelabs/anclax
   ```
 
 ### 亮点（Highlights）✨

@@ -5,9 +5,9 @@ import (
 	"math"
 	"testing"
 
-	taskcore "github.com/cloudcarver/anclax/pkg/taskcore/store"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	taskcore "github.com/risingwavelabs/anclax/pkg/taskcore/store"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 )

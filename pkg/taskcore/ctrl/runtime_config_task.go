@@ -5,8 +5,8 @@ import (
 	"errors"
 	"math"
 
-	taskcore "github.com/cloudcarver/anclax/pkg/taskcore/store"
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	taskcore "github.com/risingwavelabs/anclax/pkg/taskcore/store"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 )
 
 const ConfigUpdateTaskPriority int32 = math.MaxInt32

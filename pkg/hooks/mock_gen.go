@@ -13,8 +13,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	core "github.com/cloudcarver/anclax/core"
-	macaroons "github.com/cloudcarver/anclax/pkg/macaroons"
+	core "github.com/risingwavelabs/anclax/core"
+	macaroons "github.com/risingwavelabs/anclax/pkg/macaroons"
 	gomock "go.uber.org/mock/gomock"
 )
 

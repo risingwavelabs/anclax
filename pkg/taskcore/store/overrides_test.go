@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/stretchr/testify/require"
 )
 

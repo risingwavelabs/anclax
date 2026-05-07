@@ -15,7 +15,7 @@ Join our [Discord server](https://discord.gg/XxXXbyF59H).
 1. Install the Anclax CLI:
 
   ```bash
-  go install github.com/cloudcarver/anclax/cmd/anclax@latest
+  go install github.com/risingwavelabs/anclax/cmd/anclax@latest
   ```
 
 2. Bootstrap a new project (installs toolchain + runs codegen):
@@ -37,7 +37,7 @@ Join our [Discord server](https://discord.gg/XxXXbyF59H).
 4. Optional: add the Anclax skill to your coding agent:
 
   ```bash
-  npx skills add cloudcarver/anclax
+  npx skills add risingwavelabs/anclax
   ```
 
 

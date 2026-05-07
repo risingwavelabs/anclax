@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cloudcarver/anclax/core"
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/pkg/errors"
 )
 

@@ -1,10 +1,10 @@
 package wire
 
 import (
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/globalctx"
-	"github.com/cloudcarver/anclax/pkg/taskcore/worker"
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/globalctx"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/worker"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 )
 
 func NewConfiguredWorker(globalCtx *globalctx.GlobalContext, cfg *config.Config, m model.ModelInterface, taskHandler worker.TaskHandler) (worker.WorkerInterface, error) {

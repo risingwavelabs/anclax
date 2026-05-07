@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/macaroons/store"
+	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"github.com/pkg/errors"
 )
 

@@ -3,8 +3,8 @@ package store
 import (
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/utils"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/pkg/errors"
 )
 

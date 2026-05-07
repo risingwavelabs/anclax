@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/cloudcarver/anclax/pkg/logger"
+	"github.com/risingwavelabs/anclax/pkg/logger"
 )
 
 var log = logger.NewLogAgent("globalctx")

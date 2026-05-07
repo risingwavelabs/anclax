@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/taskcore/pgnotify"
-	taskcore "github.com/cloudcarver/anclax/pkg/taskcore/store"
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/pgnotify"
+	taskcore "github.com/risingwavelabs/anclax/pkg/taskcore/store"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"

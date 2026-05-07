@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/cloudcarver/anclax/pkg/taskcore/pgnotify"
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/pgnotify"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 )
 
 func FuzzBuildLabelWeights(f *testing.F) {

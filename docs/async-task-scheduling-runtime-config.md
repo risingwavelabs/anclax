@@ -100,7 +100,7 @@ Note: the control-plane API supplies `requestID`, `notifyInterval`, and `listenT
 Use the control plane API to enqueue and wait for runtime config updates:
 
 ```go
-import "github.com/cloudcarver/anclax/pkg/taskcore/ctrl"
+import "github.com/risingwavelabs/anclax/pkg/taskcore/ctrl"
 
 maxStrict := int32(20)
 defaultWeight := int32(1)

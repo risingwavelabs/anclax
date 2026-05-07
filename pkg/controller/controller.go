@@ -3,10 +3,10 @@ package controller
 import (
 	"errors"
 
-	"github.com/cloudcarver/anclax/pkg/auth"
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/service"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/auth"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/service"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/gofiber/fiber/v2"
 )
 

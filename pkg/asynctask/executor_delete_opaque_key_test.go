@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 )

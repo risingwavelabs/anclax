@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/globalctx"
-	"github.com/cloudcarver/anclax/pkg/logger"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/globalctx"
+	"github.com/risingwavelabs/anclax/pkg/logger"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"go.uber.org/zap"

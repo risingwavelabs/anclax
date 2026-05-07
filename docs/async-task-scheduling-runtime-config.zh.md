@@ -100,7 +100,7 @@ Anclax 提供 `updateWorkerRuntimeConfig` 任务（定义见 `api/tasks.yaml`）
 建议通过控制面 API 入队并等待配置更新完成：
 
 ```go
-import "github.com/cloudcarver/anclax/pkg/taskcore/ctrl"
+import "github.com/risingwavelabs/anclax/pkg/taskcore/ctrl"
 
 maxStrict := int32(20)
 defaultWeight := int32(1)

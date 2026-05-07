@@ -13,7 +13,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/utils"
 	"gopkg.in/yaml.v3"
 )
 

@@ -3,7 +3,7 @@ package handler
 import (
 	"myexampleapp/pkg/zgen/apigen"
 
-	"github.com/cloudcarver/anclax/pkg/auth"
+	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/gofiber/fiber/v2"
 )
 

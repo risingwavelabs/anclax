@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 
-	"github.com/cloudcarver/anclax/pkg/logger"
+	"github.com/risingwavelabs/anclax/pkg/logger"
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
