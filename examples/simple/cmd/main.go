@@ -6,7 +6,7 @@ import (
 
 	"myexampleapp/wire"
 
-	"github.com/cloudcarver/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/utils"
 )
 
 func main() {

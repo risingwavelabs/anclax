@@ -3,7 +3,7 @@ package model
 import (
 	context "context"
 
-	"github.com/cloudcarver/anclax/core"
+	"github.com/risingwavelabs/anclax/core"
 	"go.uber.org/mock/gomock"
 )
 

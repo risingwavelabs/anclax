@@ -3,8 +3,8 @@ package hooks
 import (
 	"context"
 
-	"github.com/cloudcarver/anclax/core"
-	"github.com/cloudcarver/anclax/pkg/macaroons"
+	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/macaroons"
 )
 
 type (

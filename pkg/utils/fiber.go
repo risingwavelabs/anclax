@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/cloudcarver/anclax/pkg/logger"
+	"github.com/risingwavelabs/anclax/pkg/logger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/pkg/errors"

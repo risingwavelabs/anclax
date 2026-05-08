@@ -3,7 +3,7 @@ package store
 import (
 	"testing"
 
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 )
 
 func FuzzWithPriorityAndWithWeight(f *testing.F) {

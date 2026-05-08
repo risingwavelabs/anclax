@@ -8,10 +8,10 @@ import (
 	"myexampleapp/pkg/zgen/taskgen"
 	"time"
 
-	anclax_config "github.com/cloudcarver/anclax/pkg/config"
-	anclax_wire "github.com/cloudcarver/anclax/wire"
+	anclax_config "github.com/risingwavelabs/anclax/pkg/config"
+	anclax_wire "github.com/risingwavelabs/anclax/wire"
 
-	anclax_app "github.com/cloudcarver/anclax/pkg/app"
+	anclax_app "github.com/risingwavelabs/anclax/pkg/app"
 )
 
 func ProvidePluginMeta() anclax_app.PluginMeta {

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/macaroons/store"
+	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"

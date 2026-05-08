@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"github.com/cloudcarver/anclax/pkg/auth"
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/pkg/auth"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/gofiber/fiber/v2"
 )
 

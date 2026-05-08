@@ -15,10 +15,10 @@ import (
 	reflect "reflect"
 	time "time"
 
-	core "github.com/cloudcarver/anclax/core"
-	apigen "github.com/cloudcarver/anclax/pkg/zgen/apigen"
-	querier "github.com/cloudcarver/anclax/pkg/zgen/querier"
 	uuid "github.com/google/uuid"
+	core "github.com/risingwavelabs/anclax/core"
+	apigen "github.com/risingwavelabs/anclax/pkg/zgen/apigen"
+	querier "github.com/risingwavelabs/anclax/pkg/zgen/querier"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -605,6 +605,21 @@ func (m *MockModelInterface) ListTaskDescendantIDs(ctx context.Context, parentTa
 func (mr *MockModelInterfaceMockRecorder) ListTaskDescendantIDs(ctx, parentTaskID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTaskDescendantIDs", reflect.TypeOf((*MockModelInterface)(nil).ListTaskDescendantIDs), ctx, parentTaskID)
+}
+
+// ListUsers mocks base method.
+func (m *MockModelInterface) ListUsers(ctx context.Context) ([]*querier.ListUsersRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListUsers", ctx)
+	ret0, _ := ret[0].([]*querier.ListUsersRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListUsers indicates an expected call of ListUsers.
+func (mr *MockModelInterfaceMockRecorder) ListUsers(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListUsers", reflect.TypeOf((*MockModelInterface)(nil).ListUsers), ctx)
 }
 
 // MarkWorkerOffline mocks base method.

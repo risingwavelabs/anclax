@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	taskcoredtmtest "github.com/cloudcarver/anclax/pkg/taskcore/dtmtest/gen"
+	taskcoredtmtest "github.com/risingwavelabs/anclax/pkg/taskcore/dtmtest/gen"
 	"github.com/stretchr/testify/require"
 )
 

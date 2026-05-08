@@ -3,8 +3,8 @@ package config
 import (
 	"os"
 
-	"github.com/cloudcarver/anclax/lib/conf"
-	anclax_config "github.com/cloudcarver/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/lib/conf"
+	anclax_config "github.com/risingwavelabs/anclax/pkg/config"
 )
 
 type Config struct {

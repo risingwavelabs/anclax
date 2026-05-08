@@ -57,7 +57,7 @@ var goModules = []string{
 	"github.com/jackc/pgx/v5",
 	"github.com/gofiber/fiber/v2",
 	"github.com/google/wire",
-	"github.com/cloudcarver/anclax",
+	"github.com/risingwavelabs/anclax",
 }
 
 func runGenInit(c *cli.Context) error {

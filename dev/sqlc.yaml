@@ -64,15 +64,15 @@ sql:
 
         - column: "anclax.tasks.spec"
           go_type:
-            import: "github.com/cloudcarver/anclax/pkg/zgen/apigen"
+            import: "github.com/risingwavelabs/anclax/pkg/zgen/apigen"
             type: "TaskSpec"
 
         - column: "anclax.events.spec"
           go_type:
-            import: "github.com/cloudcarver/anclax/pkg/zgen/apigen"
+            import: "github.com/risingwavelabs/anclax/pkg/zgen/apigen"
             type: "EventSpec"
 
         - column: "anclax.tasks.attributes"
           go_type:
-            import: "github.com/cloudcarver/anclax/pkg/zgen/apigen"
+            import: "github.com/risingwavelabs/anclax/pkg/zgen/apigen"
             type: "TaskAttributes"

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/cloudcarver/anclax/pkg/zgen/taskgen"
+	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
 )
 
 func (e *Executor) ExecuteStressProbe(ctx context.Context, params *taskgen.StressProbeParameters) error {

@@ -11,9 +11,9 @@ import (
 	"myexampleapp/pkg/config"
 	"myexampleapp/pkg/zgen/querier"
 
-	anclaxapp "github.com/cloudcarver/anclax/pkg/app"
-	"github.com/cloudcarver/anclax/pkg/logger"
-	anclaxutils "github.com/cloudcarver/anclax/pkg/utils"
+	anclaxapp "github.com/risingwavelabs/anclax/pkg/app"
+	"github.com/risingwavelabs/anclax/pkg/logger"
+	anclaxutils "github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/pgx/v5"
 	"github.com/golang-migrate/migrate/v4/source/iofs"

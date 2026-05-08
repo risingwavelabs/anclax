@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/cloudcarver/anclax/core"
-	"github.com/cloudcarver/anclax/pkg/auth"
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/hooks"
-	"github.com/cloudcarver/anclax/pkg/taskcore/worker"
-	"github.com/cloudcarver/anclax/pkg/utils"
-	"github.com/cloudcarver/anclax/pkg/zcore/model"
-	"github.com/cloudcarver/anclax/pkg/zgen/apigen"
+	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/auth"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/hooks"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/worker"
+	"github.com/risingwavelabs/anclax/pkg/utils"
+	"github.com/risingwavelabs/anclax/pkg/zcore/model"
+	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/pkg/errors"
 )
 
@@ -47,6 +47,12 @@ type ServiceInterface interface {
 
 	// IsUsernameExists returns true if the username exists
 	IsUsernameExists(ctx context.Context, username string) (bool, error)
+
+	// ListUsers returns the non-deleted users in id-ascending order. Each
+	// returned user carries only public metadata — password hash and
+	// salt are intentionally omitted from the result rows so callers can
+	// surface the list to admin UIs without scrubbing fields manually.
+	ListUsers(ctx context.Context) ([]UserListItem, error)
 
 	DeleteUserByName(ctx context.Context, username string) error
 

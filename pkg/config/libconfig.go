@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/cloudcarver/anclax/lib/ws"
+	"github.com/risingwavelabs/anclax/lib/ws"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 

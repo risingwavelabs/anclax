@@ -1,4 +1,4 @@
-module github.com/cloudcarver/anclax
+module github.com/risingwavelabs/anclax
 
 go 1.25.6
 

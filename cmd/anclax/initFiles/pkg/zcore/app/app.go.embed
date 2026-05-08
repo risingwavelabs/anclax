@@ -3,8 +3,8 @@ package app
 import (
 	"myexampleapp/pkg/zgen/apigen"
 
-	anclax_app "github.com/cloudcarver/anclax/pkg/app"
-	"github.com/cloudcarver/anclax/pkg/taskcore/worker"
+	anclax_app "github.com/risingwavelabs/anclax/pkg/app"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/worker"
 	"github.com/gofiber/fiber/v2"
 )
 

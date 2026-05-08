@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	core "github.com/cloudcarver/anclax/core"
+	core "github.com/risingwavelabs/anclax/core"
 	gomock "go.uber.org/mock/gomock"
 )
 

@@ -5,7 +5,7 @@ This project is initialized by `anclax init` command.
 Use skill:
 
 ```
-npx skills add cloudcarver/anclax
+npx skills add risingwavelabs/anclax
 ```
 
 ## File structure

@@ -3,9 +3,9 @@ package wire
 import (
 	"testing"
 
-	"github.com/cloudcarver/anclax/pkg/config"
-	"github.com/cloudcarver/anclax/pkg/globalctx"
-	"github.com/cloudcarver/anclax/pkg/taskcore/worker"
+	"github.com/risingwavelabs/anclax/pkg/config"
+	"github.com/risingwavelabs/anclax/pkg/globalctx"
+	"github.com/risingwavelabs/anclax/pkg/taskcore/worker"
 	"github.com/stretchr/testify/require"
 )
 
