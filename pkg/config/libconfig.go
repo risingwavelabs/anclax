@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/risingwavelabs/anclax/lib/ws"
+	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/risingwavelabs/anclax/lib/ws"
 )
 
 type PgCfg struct {
@@ -23,6 +24,12 @@ type LibConfig struct {
 	Pg   *PgCfg
 	Log  LogCfg
 	Ws   *ws.WsCfg
+
+	// GlobalMiddlewares are registered after panic recovery and before
+	// Anclax's built-in middleware and routes. Libraries embedding Anclax can
+	// use this hook for policies that must cover every response, including
+	// authentication routes registered by NewServer.
+	GlobalMiddlewares []fiber.Handler
 }
 
 func DefaultLibConfig() *LibConfig {

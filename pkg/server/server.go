@@ -6,6 +6,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/risingwavelabs/anclax/lib/ws"
 	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/risingwavelabs/anclax/pkg/config"
@@ -13,10 +17,6 @@ import (
 	"github.com/risingwavelabs/anclax/pkg/logger"
 	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"go.uber.org/zap"
 )
 
@@ -140,6 +140,10 @@ func (s *Server) registerMiddleware() {
 	s.app.Use(recover.New(recover.Config{
 		EnableStackTrace: true,
 	}))
+
+	for _, middleware := range s.libCfg.GlobalMiddlewares {
+		s.app.Use(middleware)
+	}
 
 	if s.libCfg.Cors != nil {
 		s.app.Use(cors.New(*s.libCfg.Cors))
