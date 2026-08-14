@@ -38,6 +38,7 @@ type Server struct {
 	validator       apigen.Validator
 	wsc             *ws.WebsocketController
 	libCfg          *config.LibConfig
+	options         Options
 	skipLogRequest  func(c *fiber.Ctx) bool
 	skipLogResponse func(c *fiber.Ctx) bool
 }
@@ -49,6 +50,7 @@ func NewServer(
 	auth auth.AuthInterface,
 	serverInterface apigen.ServerInterface,
 	validator apigen.Validator,
+	options Options,
 ) (*Server, error) {
 	// create fiber app
 	app := fiber.New(fiber.Config{
@@ -79,6 +81,7 @@ func NewServer(
 		globalCtx:       globalCtx,
 		validator:       validator,
 		libCfg:          libCfg,
+		options:         options,
 	}
 
 	s.registerMiddleware()
@@ -141,7 +144,7 @@ func (s *Server) registerMiddleware() {
 		EnableStackTrace: true,
 	}))
 
-	for _, middleware := range s.libCfg.GlobalMiddlewares {
+	for _, middleware := range s.options.middlewares {
 		s.app.Use(middleware)
 	}
 

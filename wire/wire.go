@@ -4,6 +4,7 @@
 package wire
 
 import (
+	"github.com/google/wire"
 	"github.com/risingwavelabs/anclax/pkg/app"
 	"github.com/risingwavelabs/anclax/pkg/app/closer"
 	"github.com/risingwavelabs/anclax/pkg/asynctask"
@@ -21,10 +22,13 @@ import (
 	taskcore "github.com/risingwavelabs/anclax/pkg/taskcore/store"
 	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 	"github.com/risingwavelabs/anclax/pkg/zgen/taskgen"
-	"github.com/google/wire"
 )
 
-func InitializeApplication(cfg *config.Config, libCfg *config.LibConfig) (*app.Application, error) {
+func initializeApplication(
+	cfg *config.Config,
+	libCfg *config.LibConfig,
+	serverOptions server.Options,
+) (*app.Application, error) {
 	wire.Build(
 		app.NewDebugServer,
 		app.NewApplication,
