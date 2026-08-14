@@ -6,6 +6,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/risingwavelabs/anclax/lib/ws"
 	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/risingwavelabs/anclax/pkg/config"
@@ -13,10 +17,6 @@ import (
 	"github.com/risingwavelabs/anclax/pkg/logger"
 	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"go.uber.org/zap"
 )
 
@@ -38,6 +38,7 @@ type Server struct {
 	validator       apigen.Validator
 	wsc             *ws.WebsocketController
 	libCfg          *config.LibConfig
+	options         Options
 	skipLogRequest  func(c *fiber.Ctx) bool
 	skipLogResponse func(c *fiber.Ctx) bool
 }
@@ -49,6 +50,7 @@ func NewServer(
 	auth auth.AuthInterface,
 	serverInterface apigen.ServerInterface,
 	validator apigen.Validator,
+	options Options,
 ) (*Server, error) {
 	// create fiber app
 	app := fiber.New(fiber.Config{
@@ -79,6 +81,7 @@ func NewServer(
 		globalCtx:       globalCtx,
 		validator:       validator,
 		libCfg:          libCfg,
+		options:         options,
 	}
 
 	s.registerMiddleware()
@@ -140,6 +143,10 @@ func (s *Server) registerMiddleware() {
 	s.app.Use(recover.New(recover.Config{
 		EnableStackTrace: true,
 	}))
+
+	for _, middleware := range s.options.middlewares {
+		s.app.Use(middleware)
+	}
 
 	if s.libCfg.Cors != nil {
 		s.app.Use(cors.New(*s.libCfg.Cors))

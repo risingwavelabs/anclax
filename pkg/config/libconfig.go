@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/risingwavelabs/anclax/lib/ws"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/risingwavelabs/anclax/lib/ws"
 )
 
 type PgCfg struct {
