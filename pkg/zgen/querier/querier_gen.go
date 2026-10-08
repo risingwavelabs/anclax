@@ -58,7 +58,7 @@ type Querier interface {
 	NotifyWorkerTaskInterruptAck(ctx context.Context, payload string) error
 	RefreshTaskLock(ctx context.Context, arg RefreshTaskLockParams) (int32, error)
 	ReleaseTaskLockByWorker(ctx context.Context, arg ReleaseTaskLockByWorkerParams) (int32, error)
-	RestoreUserByName(ctx context.Context, name string) error
+	RestoreUserByName(ctx context.Context, name string) (int64, error)
 	SetUserDefaultOrg(ctx context.Context, arg SetUserDefaultOrgParams) error
 	UpdatePendingTaskPriorityByLabels(ctx context.Context, arg UpdatePendingTaskPriorityByLabelsParams) (int64, error)
 	UpdatePendingTaskWeightByLabels(ctx context.Context, arg UpdatePendingTaskWeightByLabelsParams) (int64, error)

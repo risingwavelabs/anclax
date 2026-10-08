@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"testing"
 
@@ -127,6 +128,42 @@ func TestUpdateUserPassword(t *testing.T) {
 	resultUserID, err := service.UpdateUserPassword(ctx, username, password)
 	require.NoError(t, err)
 	require.Equal(t, userID, resultUserID)
+}
+
+func TestCreateNewUserConflict(t *testing.T) {
+	for _, constraint := range []string{"users_name_key", "other_constraint"} {
+		t.Run(constraint, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			m := model.NewMockModelInterfaceWithTransaction(ctrl)
+			h := hooks.NewMockAnclaxHookInterface(ctrl)
+			m.EXPECT().CreateOrg(gomock.Any(), gomock.Any()).Return(&querier.AnclaxOrg{ID: 1}, nil)
+			h.EXPECT().OnOrgCreated(gomock.Any(), gomock.Any(), int32(1)).Return(nil)
+			pgErr := &pgconn.PgError{Code: "23505", ConstraintName: constraint}
+			m.EXPECT().CreateUser(gomock.Any(), gomock.Any()).Return(nil, pgErr)
+			svc := &Service{m: m, hooks: h, generateSaltAndHash: func(string) (string, string, error) { return "salt", "hash", nil }}
+			_, err := svc.CreateNewUser(context.Background(), "same", "password")
+			if constraint == "users_name_key" {
+				require.ErrorIs(t, err, ErrUsernameExists)
+			} else {
+				require.ErrorIs(t, err, pgErr)
+			}
+		})
+	}
+}
+
+func TestRestoreUserRequiresDeletedRow(t *testing.T) {
+	for _, count := range []int64{0, 1} {
+		ctrl := gomock.NewController(t)
+		m := model.NewMockModelInterface(ctrl)
+		m.EXPECT().RestoreUserByName(gomock.Any(), "same").Return(count, nil)
+		svc := &Service{m: m}
+		err := svc.RestoreUserByName(context.Background(), "same")
+		if count == 0 {
+			require.ErrorIs(t, err, ErrUsernameExists)
+		} else {
+			require.NoError(t, err)
+		}
+	}
 }
 
 func TestRefreshTokenRevoked(t *testing.T) {
