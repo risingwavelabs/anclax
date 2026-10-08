@@ -723,11 +723,12 @@ func (mr *MockModelInterfaceMockRecorder) ReleaseTaskLockByWorker(ctx, arg any) 
 }
 
 // RestoreUserByName mocks base method.
-func (m *MockModelInterface) RestoreUserByName(ctx context.Context, name string) error {
+func (m *MockModelInterface) RestoreUserByName(ctx context.Context, name string) (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RestoreUserByName", ctx, name)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // RestoreUserByName indicates an expected call of RestoreUserByName.

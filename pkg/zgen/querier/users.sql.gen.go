@@ -153,13 +153,16 @@ func (q *Queries) ListUsers(ctx context.Context) ([]*ListUsersRow, error) {
 	return items, nil
 }
 
-const restoreUserByName = `-- name: RestoreUserByName :exec
-UPDATE anclax.users SET deleted_at = NULL WHERE name = $1
+const restoreUserByName = `-- name: RestoreUserByName :execrows
+UPDATE anclax.users SET deleted_at = NULL WHERE name = $1 AND deleted_at IS NOT NULL
 `
 
-func (q *Queries) RestoreUserByName(ctx context.Context, name string) error {
-	_, err := q.db.Exec(ctx, restoreUserByName, name)
-	return err
+func (q *Queries) RestoreUserByName(ctx context.Context, name string) (int64, error) {
+	result, err := q.db.Exec(ctx, restoreUserByName, name)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const setUserDefaultOrg = `-- name: SetUserDefaultOrg :exec

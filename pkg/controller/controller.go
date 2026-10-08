@@ -3,11 +3,11 @@ package controller
 import (
 	"errors"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/risingwavelabs/anclax/pkg/config"
 	"github.com/risingwavelabs/anclax/pkg/service"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
-	"github.com/gofiber/fiber/v2"
 )
 
 type Controller struct {
@@ -93,6 +93,9 @@ func (controller *Controller) SignUp(c *fiber.Ctx) error {
 
 	userMeta, err := controller.svc.CreateNewUser(c.Context(), params.Name, params.Password)
 	if err != nil {
+		if errors.Is(err, service.ErrUsernameExists) {
+			return c.SendStatus(fiber.StatusConflict)
+		}
 		return err
 	}
 
