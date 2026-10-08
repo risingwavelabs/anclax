@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+	"github.com/pkg/errors"
 	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
-	"github.com/jackc/pgx/v5"
-	"github.com/pkg/errors"
 )
 
 func (s *Service) SignIn(ctx context.Context, userID int32) (*apigen.Credentials, error) {
@@ -60,6 +61,9 @@ func (s *Service) SignInWithPassword(ctx context.Context, params apigen.SignInRe
 func (s *Service) RefreshToken(ctx context.Context, token string) (*apigen.Credentials, error) {
 	refreshToken, roc, err := s.auth.ParseRefreshToken(ctx, token)
 	if err != nil {
+		if errors.Is(err, store.ErrKeyNotFound) {
+			return nil, ErrRefreshTokenExpired
+		}
 		return nil, errors.Wrapf(err, "failed to parse refresh token")
 	}
 

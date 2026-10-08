@@ -3,13 +3,14 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"testing"
 
+	"github.com/pkg/errors"
 	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/risingwavelabs/anclax/pkg/hooks"
 	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 )
@@ -126,4 +127,13 @@ func TestUpdateUserPassword(t *testing.T) {
 	resultUserID, err := service.UpdateUserPassword(ctx, username, password)
 	require.NoError(t, err)
 	require.Equal(t, userID, resultUserID)
+}
+
+func TestRefreshTokenRevoked(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	a := auth.NewMockAuthInterface(ctrl)
+	a.EXPECT().ParseRefreshToken(gomock.Any(), "revoked").Return(nil, nil, errors.Wrap(store.ErrKeyNotFound, "parse"))
+	svc := &Service{auth: a}
+	_, err := svc.RefreshToken(context.Background(), "revoked")
+	require.ErrorIs(t, err, ErrRefreshTokenExpired)
 }
