@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/pkg/errors"
 	"github.com/risingwavelabs/anclax/pkg/config"
 	"github.com/risingwavelabs/anclax/pkg/hooks"
 	"github.com/risingwavelabs/anclax/pkg/macaroons"
 	"github.com/risingwavelabs/anclax/pkg/utils"
-	"github.com/gofiber/fiber/v2"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -73,7 +73,7 @@ func NewAuth(cfg *config.Config, macaroonManager macaroons.MacaroonManagerInterf
 		return nil, err
 	}
 	if err := caveatParser.Register(CaveatRefreshOnly, func() macaroons.Caveat {
-		return &RefreshOnlyCaveat{}
+		return &RefreshOnlyCaveat{caveatParser: caveatParser}
 	}); err != nil {
 		return nil, err
 	}

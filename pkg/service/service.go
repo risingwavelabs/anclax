@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/risingwavelabs/anclax/core"
 	"github.com/risingwavelabs/anclax/pkg/auth"
 	"github.com/risingwavelabs/anclax/pkg/config"
@@ -12,7 +13,6 @@ import (
 	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
-	"github.com/pkg/errors"
 )
 
 type (
@@ -22,6 +22,7 @@ type (
 )
 
 var (
+	ErrUsernameExists                = errors.New("username already exists")
 	ErrUserNotFound                  = errors.New("user not found")
 	ErrInvalidPassword               = errors.New("invalid password")
 	ErrRefreshTokenExpired           = errors.New("refresh token expired")

@@ -26,8 +26,8 @@ SELECT EXISTS (SELECT 1 FROM anclax.users WHERE name = $1);
 -- name: DeleteUserByName :exec
 UPDATE anclax.users SET deleted_at = CURRENT_TIMESTAMP WHERE name = $1;
 
--- name: RestoreUserByName :exec
-UPDATE anclax.users SET deleted_at = NULL WHERE name = $1;
+-- name: RestoreUserByName :execrows
+UPDATE anclax.users SET deleted_at = NULL WHERE name = $1 AND deleted_at IS NOT NULL;
 
 -- name: SetUserDefaultOrg :exec
 INSERT INTO anclax.user_default_orgs (user_id, org_id)

@@ -43,3 +43,8 @@ gen:
 
 install: gen
 	go install ./cmd/anclax
+
+# Regenerate backend contracts from anclax.yaml.
+.PHONY: gen-backend
+gen-backend:
+	go run ./cmd/anclax gen

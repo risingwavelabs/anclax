@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/pkg/errors"
 	"github.com/risingwavelabs/anclax/core"
+	"github.com/risingwavelabs/anclax/pkg/macaroons/store"
 	"github.com/risingwavelabs/anclax/pkg/utils"
 	"github.com/risingwavelabs/anclax/pkg/zcore/model"
 	"github.com/risingwavelabs/anclax/pkg/zgen/apigen"
 	"github.com/risingwavelabs/anclax/pkg/zgen/querier"
-	"github.com/jackc/pgx/v5"
-	"github.com/pkg/errors"
 )
 
 func (s *Service) SignIn(ctx context.Context, userID int32) (*apigen.Credentials, error) {
@@ -60,6 +62,9 @@ func (s *Service) SignInWithPassword(ctx context.Context, params apigen.SignInRe
 func (s *Service) RefreshToken(ctx context.Context, token string) (*apigen.Credentials, error) {
 	refreshToken, roc, err := s.auth.ParseRefreshToken(ctx, token)
 	if err != nil {
+		if errors.Is(err, store.ErrKeyNotFound) {
+			return nil, ErrRefreshTokenExpired
+		}
 		return nil, errors.Wrapf(err, "failed to parse refresh token")
 	}
 
@@ -144,6 +149,10 @@ func (s *Service) CreateNewUserWithTx(ctx context.Context, tx core.Tx, username,
 		PasswordSalt: salt,
 	})
 	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" && pgErr.ConstraintName == "users_name_key" {
+			return nil, ErrUsernameExists
+		}
 		return nil, errors.Wrapf(err, "failed to create user")
 	}
 
@@ -204,7 +213,14 @@ func (s *Service) ListUsers(ctx context.Context) ([]UserListItem, error) {
 }
 
 func (s *Service) RestoreUserByName(ctx context.Context, username string) error {
-	return s.m.RestoreUserByName(ctx, username)
+	count, err := s.m.RestoreUserByName(ctx, username)
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return ErrUsernameExists
+	}
+	return nil
 }
 
 func (s *Service) CreateTestAccount(ctx context.Context, username, password string) (int32, error) {
