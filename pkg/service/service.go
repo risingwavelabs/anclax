@@ -44,6 +44,12 @@ type ServiceInterface interface {
 
 	CreateNewUserWithTx(ctx context.Context, tx core.Tx, username, password string) (*UserMeta, error)
 
+	// Create a new user that joins an existing organization (member, not
+	// owner) and defaults to it, without creating a personal organization.
+	CreateNewUserInOrg(ctx context.Context, username, password string, orgID int32) (*UserMeta, error)
+
+	CreateNewUserInOrgWithTx(ctx context.Context, tx core.Tx, username, password string, orgID int32) (*UserMeta, error)
+
 	GetUserByUserName(ctx context.Context, username string) (*UserMeta, error)
 
 	// IsUsernameExists returns true if the username exists

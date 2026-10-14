@@ -187,6 +187,73 @@ func (s *Service) CreateNewUserWithTx(ctx context.Context, tx core.Tx, username,
 	}, nil
 }
 
+// CreateNewUserInOrg creates a user that joins an existing organization
+// instead of getting a fresh personal one. The user is added as a member
+// (not an owner) of orgID and defaults to it. This is the entry path for a
+// shared-workspace deployment, where every user belongs to one shared org;
+// orgID must already exist.
+func (s *Service) CreateNewUserInOrg(ctx context.Context, username, password string, orgID int32) (*UserMeta, error) {
+	var ret *UserMeta
+	if err := s.m.RunTransactionWithTx(ctx, func(tx core.Tx, txm model.ModelInterface) error {
+		u, err := s.CreateNewUserInOrgWithTx(ctx, tx, username, password, orgID)
+		ret = u
+		return err
+	}); err != nil {
+		return nil, errors.Wrapf(err, "failed to create new user in org %d", orgID)
+	}
+	return ret, nil
+}
+
+// CreateNewUserInOrgWithTx is CreateNewUserWithTx minus organization
+// creation: it does not create an org, run OnOrgCreated, or insert an
+// org owner. It creates the user, runs OnUserCreated, adds the user as a
+// member of the existing orgID, and sets orgID as the user's default. All
+// writes share tx, so a failure leaves no partial user/membership.
+func (s *Service) CreateNewUserInOrgWithTx(ctx context.Context, tx core.Tx, username, password string, orgID int32) (*UserMeta, error) {
+	salt, hash, err := s.generateSaltAndHash(password)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to generate hash and salt")
+	}
+
+	txm := s.m.SpawnWithTx(tx)
+
+	user, err := txm.CreateUser(ctx, querier.CreateUserParams{
+		Name:         username,
+		PasswordHash: hash,
+		PasswordSalt: salt,
+	})
+	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" && pgErr.ConstraintName == "users_name_key" {
+			return nil, ErrUsernameExists
+		}
+		return nil, errors.Wrapf(err, "failed to create user")
+	}
+
+	if err := s.hooks.OnUserCreated(ctx, tx, user.ID); err != nil {
+		return nil, errors.Wrapf(err, "failed to run on user created hook")
+	}
+
+	if _, err := txm.InsertOrgUser(ctx, querier.InsertOrgUserParams{
+		UserID: user.ID,
+		OrgID:  orgID,
+	}); err != nil {
+		return nil, errors.Wrapf(err, "failed to add user to organization %d", orgID)
+	}
+
+	if err := txm.SetUserDefaultOrg(ctx, querier.SetUserDefaultOrgParams{
+		UserID: user.ID,
+		OrgID:  orgID,
+	}); err != nil {
+		return nil, errors.Wrapf(err, "failed to set user default org")
+	}
+
+	return &UserMeta{
+		OrgID:  orgID,
+		UserID: user.ID,
+	}, nil
+}
+
 func (s *Service) DeleteUserByName(ctx context.Context, username string) error {
 	return s.m.DeleteUserByName(ctx, username)
 }
