@@ -85,6 +85,76 @@ func TestCreateNewUser(t *testing.T) {
 
 }
 
+func TestCreateNewUserInOrg(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockModel := model.NewMockModelInterfaceWithTransaction(ctrl)
+	mockHooks := hooks.NewMockAnclaxHookInterface(ctrl)
+
+	var (
+		orgID    = int32(7)
+		userID   = int32(102)
+		user     = &querier.AnclaxUser{ID: userID}
+		username = "shared-user"
+		password = "testpassword"
+		ctx      = context.Background()
+	)
+
+	// No CreateOrg / OnOrgCreated / InsertOrgOwner expectations: gomock fails
+	// the test if the personal-org path is taken.
+	mockModel.EXPECT().CreateUser(ctx, querier.CreateUserParams{
+		Name:         username,
+		PasswordHash: "hash",
+		PasswordSalt: "salt",
+	}).Return(user, nil)
+	mockHooks.EXPECT().OnUserCreated(ctx, gomock.Any(), userID).Return(nil)
+	mockModel.EXPECT().InsertOrgUser(ctx, querier.InsertOrgUserParams{
+		UserID: userID,
+		OrgID:  orgID,
+	}).Return(nil, nil)
+	mockModel.EXPECT().SetUserDefaultOrg(ctx, querier.SetUserDefaultOrgParams{
+		UserID: userID,
+		OrgID:  orgID,
+	}).Return(nil)
+
+	service := &Service{
+		m:     mockModel,
+		hooks: mockHooks,
+		generateSaltAndHash: func(string) (string, string, error) {
+			return "salt", "hash", nil
+		},
+	}
+
+	u, err := service.CreateNewUserInOrg(ctx, username, password, orgID)
+	require.NoError(t, err)
+	require.Equal(t, orgID, u.OrgID)
+	require.Equal(t, userID, u.UserID)
+}
+
+func TestCreateNewUserInOrgConflict(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockModel := model.NewMockModelInterfaceWithTransaction(ctrl)
+	ctx := context.Background()
+
+	// A duplicate name maps to ErrUsernameExists; no membership/default-org
+	// writes happen (gomock fails if InsertOrgUser/SetUserDefaultOrg run).
+	pgErr := &pgconn.PgError{Code: "23505", ConstraintName: "users_name_key"}
+	mockModel.EXPECT().CreateUser(ctx, gomock.Any()).Return(nil, pgErr)
+
+	service := &Service{
+		m: mockModel,
+		generateSaltAndHash: func(string) (string, string, error) {
+			return "salt", "hash", nil
+		},
+	}
+
+	_, err := service.CreateNewUserInOrg(ctx, "dup", "pw", int32(7))
+	require.ErrorIs(t, err, ErrUsernameExists)
+}
+
 func TestUpdateUserPassword(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
